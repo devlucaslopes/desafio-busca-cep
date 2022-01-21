@@ -1,3 +1,5 @@
 import React from 'react'
 
-export const Wrapper = () => <div />
+import './style.scss'
+
+export const Wrapper = () => <div className="wrapper" data-testid="wrapper" />
