@@ -4,9 +4,20 @@ import userEvent from '@testing-library/user-event'
 
 import { Search } from '.'
 
+const renderSearch = () => {
+  const onSubmitSpy = jest.fn()
+
+  const component = render(<Search onSubmit={onSubmitSpy} />)
+
+  return {
+    component,
+    onSubmitSpy
+  }
+}
+
 describe('<Search />', () => {
   it('should render correctly', () => {
-    render(<Search />)
+    renderSearch()
 
     expect(screen.getByRole('form')).toBeInTheDocument()
     expect(screen.getByRole('textbox')).toHaveAttribute(
@@ -19,7 +30,7 @@ describe('<Search />', () => {
   })
 
   it('should update input value when user typed', () => {
-    render(<Search />)
+    renderSearch()
 
     const input = screen.getByRole('textbox')
 
@@ -31,9 +42,7 @@ describe('<Search />', () => {
   })
 
   it('should calls onSubmit() with correct params when user clicked on button', () => {
-    const onSubmitSpy = jest.fn()
-
-    render(<Search onSubmit={onSubmitSpy} />)
+    const { onSubmitSpy } = renderSearch()
 
     const button = screen.getByRole('button', { name: /buscar cep/i })
 
