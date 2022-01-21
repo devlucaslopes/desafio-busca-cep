@@ -1,7 +1,11 @@
 import React from 'react'
 
 function App() {
-  return <h1>Busca cep</h1>
+  return (
+    <main>
+      <h1>Busca cep</h1>
+    </main>
+  )
 }
 
 export default App
