@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FormEvent, useState } from 'react'
 
 type SearchType = {
   onSubmit: (cep: string) => void
@@ -7,7 +7,9 @@ type SearchType = {
 export const Search = ({ onSubmit }: SearchType) => {
   const [cep, setCep] = useState('')
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+
     onSubmit(cep)
   }
 
