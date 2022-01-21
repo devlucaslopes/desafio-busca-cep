@@ -18,6 +18,16 @@ describe('<Wrapper />', () => {
 
     expect(component).toBeInTheDocument()
     expect(component).toHaveClass('wrapper')
+    expect(component).toMatchInlineSnapshot(`
+      <div
+        class="wrapper"
+        data-testid="wrapper"
+      >
+        <h1>
+          Lorem Ipsum
+        </h1>
+      </div>
+    `)
   })
 
   it('should render children component', () => {
