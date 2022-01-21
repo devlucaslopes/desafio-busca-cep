@@ -29,4 +29,18 @@ describe('<Search />', () => {
 
     expect(input).toHaveValue('32110290')
   })
+
+  it('should calls onSubmit() with correct params when user clicked on button', () => {
+    const onSubmitSpy = jest.fn()
+
+    render(<Search onSubmit={onSubmitSpy} />)
+
+    const button = screen.getByRole('button', { name: /buscar cep/i })
+
+    userEvent.type(screen.getByRole('textbox'), '32110290')
+    userEvent.click(button)
+
+    expect(onSubmitSpy).toHaveBeenCalled()
+    expect(onSubmitSpy).toHaveBeenCalledWith('32110290')
+  })
 })
