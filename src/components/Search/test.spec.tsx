@@ -29,7 +29,7 @@ describe('<Search />', () => {
     ).toBeInTheDocument()
   })
 
-  it('should update input value when user typed', () => {
+  it('should update input value when user typed', async () => {
     renderSearch()
 
     const input = screen.getByRole('textbox')
@@ -38,7 +38,7 @@ describe('<Search />', () => {
 
     userEvent.type(input, '32110290')
 
-    expect(input).toHaveValue('32110290')
+    expect(input).toHaveValue('32110-290')
   })
 
   it('should calls onSubmit() with correct params when user clicked on button', () => {
@@ -65,16 +65,15 @@ describe('<Search />', () => {
     expect(screen.getByText('Digite um CEP válido!')).toBeInTheDocument()
   })
 
-  it('should display error message when value.length greather then 8 characters', () => {
-    const { onSubmitSpy } = renderSearch()
+  it("shouldn't save strings greather then 9 characters with '-' ", () => {
+    renderSearch()
 
     const button = screen.getByRole('button', { name: /buscar cep/i })
 
     userEvent.type(screen.getByRole('textbox'), '123456789')
     userEvent.click(button)
 
-    expect(onSubmitSpy).not.toHaveBeenCalled()
-    expect(screen.getByText('Digite um CEP válido!')).toBeInTheDocument()
+    expect(screen.getByRole('textbox')).toHaveValue('12345-678')
   })
 
   it('should display error message when value.length less then 7 characters', () => {
