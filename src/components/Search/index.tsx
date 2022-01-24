@@ -6,6 +6,14 @@ type SearchType = {
   onSubmit: (cep: string) => void
 }
 
+const validate = (value: string): boolean => {
+  if (isNaN(parseInt(value))) return false
+
+  if (value.length > 8) return false
+
+  return true
+}
+
 export const Search = ({ onSubmit }: SearchType) => {
   const [cep, setCep] = useState('')
   const [hasError, setHasError] = useState(false)
@@ -14,7 +22,7 @@ export const Search = ({ onSubmit }: SearchType) => {
     event.preventDefault()
     setHasError(false)
 
-    if (isNaN(parseInt(cep))) {
+    if (!validate(cep)) {
       setHasError(true)
       return
     }
@@ -33,7 +41,7 @@ export const Search = ({ onSubmit }: SearchType) => {
         />
         <button type="submit">Buscar CEP</button>
       </div>
-      {hasError && <span>CEP inválido, digite apenas números.</span>}
+      {hasError && <span>Digite um CEP válido!</span>}
     </form>
   )
 }
