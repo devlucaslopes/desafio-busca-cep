@@ -9,7 +9,7 @@ type SearchType = {
 const validate = (value: string): boolean => {
   if (isNaN(parseInt(value))) return false
 
-  if (value.length > 8) return false
+  if (value.length !== 8) return false
 
   return true
 }
