@@ -1,0 +1,28 @@
+form {
+  > div {
+    display: flex;
+    gap: 16px;
+    height: 32px;
+
+    button,
+    input {
+      padding: 0 8px;
+    }
+
+    input {
+      flex: 1;
+    }
+
+    button {
+      background-color: #444444;
+      color: #ffffff;
+    }
+  }
+
+  span {
+    display: block;
+    margin-top: 8px;
+    font-weight: 500;
+    color: red;
+  }
+}
