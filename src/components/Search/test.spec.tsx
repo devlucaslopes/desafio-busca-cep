@@ -76,4 +76,16 @@ describe('<Search />', () => {
     expect(onSubmitSpy).not.toHaveBeenCalled()
     expect(screen.getByText('Digite um CEP válido!')).toBeInTheDocument()
   })
+
+  it('should display error message when value.length less then 7 characters', () => {
+    const { onSubmitSpy } = renderSearch()
+
+    const button = screen.getByRole('button', { name: /buscar cep/i })
+
+    userEvent.type(screen.getByRole('textbox'), '123456')
+    userEvent.click(button)
+
+    expect(onSubmitSpy).not.toHaveBeenCalled()
+    expect(screen.getByText('Digite um CEP válido!')).toBeInTheDocument()
+  })
 })
