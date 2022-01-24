@@ -1,5 +1,7 @@
 import React, { FormEvent, useState } from 'react'
 
+import './style.scss'
+
 type SearchType = {
   onSubmit: (cep: string) => void
 }
@@ -10,6 +12,7 @@ export const Search = ({ onSubmit }: SearchType) => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
+    setHasError(false)
 
     if (isNaN(parseInt(cep))) {
       setHasError(true)
