@@ -6,22 +6,31 @@ type SearchType = {
 
 export const Search = ({ onSubmit }: SearchType) => {
   const [cep, setCep] = useState('')
+  const [hasError, setHasError] = useState(false)
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
+
+    if (isNaN(parseInt(cep))) {
+      setHasError(true)
+      return
+    }
 
     onSubmit(cep)
   }
 
   return (
     <form name="search" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Digite seu CEP (apenas números)"
-        value={cep}
-        onChange={(ev) => setCep(ev.target.value)}
-      />
-      <button type="submit">Buscar CEP</button>
+      <div>
+        <input
+          type="text"
+          placeholder="Digite seu CEP (apenas números)"
+          value={cep}
+          onChange={(ev) => setCep(ev.target.value)}
+        />
+        <button type="submit">Buscar CEP</button>
+      </div>
+      {hasError && <span>CEP inválido, digite apenas números.</span>}
     </form>
   )
 }
