@@ -53,7 +53,7 @@ describe('<Search />', () => {
     expect(onSubmitSpy).toHaveBeenCalledWith('32110290')
   })
 
-  it('should display error message when value is invalid', () => {
+  it('should display error message when value is a string', () => {
     const { onSubmitSpy } = renderSearch()
 
     const button = screen.getByRole('button', { name: /buscar cep/i })
@@ -62,8 +62,18 @@ describe('<Search />', () => {
     userEvent.click(button)
 
     expect(onSubmitSpy).not.toHaveBeenCalled()
-    expect(
-      screen.getByText('CEP inválido, digite apenas números.')
-    ).toBeInTheDocument()
+    expect(screen.getByText('Digite um CEP válido!')).toBeInTheDocument()
+  })
+
+  it('should display error message when value.length greather then 8 characters', () => {
+    const { onSubmitSpy } = renderSearch()
+
+    const button = screen.getByRole('button', { name: /buscar cep/i })
+
+    userEvent.type(screen.getByRole('textbox'), '123456789')
+    userEvent.click(button)
+
+    expect(onSubmitSpy).not.toHaveBeenCalled()
+    expect(screen.getByText('Digite um CEP válido!')).toBeInTheDocument()
   })
 })
