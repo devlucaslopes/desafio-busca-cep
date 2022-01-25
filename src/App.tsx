@@ -1,7 +1,8 @@
 import React from 'react'
 
-import { Search } from './components/Search'
 import { Wrapper } from './components/Wrapper'
+import { Search } from './components/Search'
+import { Result } from './components/Result'
 
 import './App.scss'
 
@@ -13,6 +14,10 @@ function App() {
 
         <Wrapper>
           <Search onSubmit={() => console.log('oi')} />
+        </Wrapper>
+
+        <Wrapper>
+          <Result />
         </Wrapper>
       </div>
     </main>
