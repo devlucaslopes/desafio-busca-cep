@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 import { Wrapper } from './components/Wrapper'
 import { Search } from './components/Search'
@@ -7,6 +8,10 @@ import { Result } from './components/Result'
 import './App.scss'
 
 function App() {
+  const handleSubmit = async (zipcode: string) => {
+    await axios.get(`https://viacep.com.br/ws/${zipcode}/json/`)
+  }
+
   return (
     <main>
       <div className="container">
@@ -14,7 +19,7 @@ function App() {
 
         <div className="content">
           <Wrapper>
-            <Search onSubmit={() => console.log('oi')} />
+            <Search onSubmit={handleSubmit} />
           </Wrapper>
 
           <Wrapper>
