@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Result /> should make snapshot 1`] = `
+<div>
+  <ul>
+    <li>
+      <strong>
+        CEP:
+      </strong>
+      <span>
+        123456
+      </span>
+    </li>
+    <li>
+      <strong>
+        Estado:
+      </strong>
+      <span>
+        MG
+      </span>
+    </li>
+    <li>
+      <strong>
+        Cidade:
+      </strong>
+      <span>
+        Belo Horizonte
+      </span>
+    </li>
+    <li>
+      <strong>
+        Logradouro:
+      </strong>
+      <span>
+        Rua XPTO
+      </span>
+    </li>
+  </ul>
+</div>
+`;
