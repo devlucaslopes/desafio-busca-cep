@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react'
 
-import { cepOnlyNumbers, formatCEP } from '../../utils/formatter'
+import { formatZipcode, zipcodeOnlyNumbers } from '../../utils/formatter'
 
 import './style.scss'
 
@@ -17,25 +17,25 @@ const validate = (value: string): boolean => {
 }
 
 export const Search = ({ onSubmit }: SearchType) => {
-  const [cep, setCep] = useState('')
+  const [zipcode, setZipcode] = useState('')
   const [hasError, setHasError] = useState(false)
 
   const handleFomarmattedCEP = (value: string) => {
-    setCep(formatCEP(value))
+    setZipcode(formatZipcode(value))
   }
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     setHasError(false)
 
-    const cepFormatted = cepOnlyNumbers(cep)
+    const zipcodeFormatted = zipcodeOnlyNumbers(zipcode)
 
-    if (!validate(cepFormatted)) {
+    if (!validate(zipcodeFormatted)) {
       setHasError(true)
       return
     }
 
-    onSubmit(cepFormatted)
+    onSubmit(zipcodeFormatted)
   }
 
   return (
@@ -44,7 +44,7 @@ export const Search = ({ onSubmit }: SearchType) => {
         <input
           type="text"
           placeholder="Digite seu CEP (apenas números)"
-          value={cep}
+          value={zipcode}
           onChange={(ev) => handleFomarmattedCEP(ev.target.value)}
         />
         <button type="submit">Buscar CEP</button>
