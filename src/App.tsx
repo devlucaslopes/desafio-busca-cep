@@ -18,7 +18,12 @@ function App() {
           </Wrapper>
 
           <Wrapper>
-            <Result />
+            <Result
+              zipcode="123456"
+              state="MG"
+              city="Belo Horizonte"
+              address="Rua XPTO"
+            />
           </Wrapper>
         </div>
       </div>

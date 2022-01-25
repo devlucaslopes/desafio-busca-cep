@@ -1,0 +1,16 @@
+ul {
+  list-style: none;
+  color: #616060;
+
+  strong {
+    font-weight: 500;
+  }
+
+  li + li {
+    margin-top: 4px;
+  }
+
+  span {
+    margin-left: 4px;
+  }
+}
