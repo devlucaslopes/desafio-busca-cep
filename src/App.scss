@@ -18,8 +18,11 @@ main {
   max-width: 1024px;
   margin: 0 auto;
   padding-top: 16px;
+}
 
-  > h1 {
-    margin-bottom: 16px;
-  }
+.content {
+  margin-top: 16px;
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  gap: 16px;
 }

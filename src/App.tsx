@@ -12,13 +12,15 @@ function App() {
       <div className="container">
         <h1>Busca cep</h1>
 
-        <Wrapper>
-          <Search onSubmit={() => console.log('oi')} />
-        </Wrapper>
+        <div className="content">
+          <Wrapper>
+            <Search onSubmit={() => console.log('oi')} />
+          </Wrapper>
 
-        <Wrapper>
-          <Result />
-        </Wrapper>
+          <Wrapper>
+            <Result />
+          </Wrapper>
+        </div>
       </div>
     </main>
   )
