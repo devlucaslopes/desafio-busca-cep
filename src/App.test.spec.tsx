@@ -54,4 +54,23 @@ describe('<App />', () => {
       expect(screen.getByText('Praça São Pedro')).toBeInTheDocument()
     })
   })
+
+  it('should show error message when request failed', async () => {
+    mockedAxios.get.mockResolvedValueOnce({ data: { erro: true } })
+
+    render(<App />)
+
+    const input = screen.getByRole('textbox')
+    const button = screen.getByRole('button', { name: /buscar cep/i })
+
+    userEvent.type(input, '32110290')
+    userEvent.click(button)
+
+    await waitFor(() => {
+      expect(screen.queryByRole('list')).not.toBeInTheDocument()
+      expect(
+        screen.getByText('CEP não encontrado, tente novamente.')
+      ).toBeInTheDocument()
+    })
+  })
 })
