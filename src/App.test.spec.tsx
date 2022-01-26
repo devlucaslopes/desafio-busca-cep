@@ -1,20 +1,19 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import axios from 'axios'
-import MockAdapter from 'axios-mock-adapter'
+
+import ZIPCODE_DATA from './mocks/zipcode.json'
 
 import App from './App'
 
+jest.mock('axios')
+
+const mockedAxios = axios as jest.Mocked<typeof axios>
+
 describe('<App />', () => {
-  let mockAxios: MockAdapter
-
   beforeEach(() => {
-    mockAxios = new MockAdapter(axios)
-  })
-
-  afterEach(() => {
-    mockAxios.reset()
+    jest.clearAllMocks()
   })
 
   it('should render search form', () => {
@@ -23,12 +22,10 @@ describe('<App />', () => {
     expect(screen.getByRole('form')).toBeInTheDocument()
   })
 
-  fit('should calls axios with zipcode when user submit the search form', () => {
-    render(<App />)
-
+  it('should calls axios with zipcode when user submit the search form', () => {
     const expectedURL = 'https://viacep.com.br/ws/32110290/json/'
 
-    mockAxios.onGet('https://viacep.com.br/ws/32110290/json/').reply(200)
+    render(<App />)
 
     const input = screen.getByRole('textbox')
     const button = screen.getByRole('button', { name: /buscar cep/i })
@@ -36,6 +33,25 @@ describe('<App />', () => {
     userEvent.type(input, '32110290')
     userEvent.click(button)
 
-    expect(mockAxios.history.get[0].url).toEqual(expectedURL)
+    expect(mockedAxios.get).toHaveBeenCalledWith(expectedURL)
+  })
+
+  it('should show result component when request succeed', async () => {
+    mockedAxios.get.mockResolvedValueOnce({ data: ZIPCODE_DATA })
+
+    render(<App />)
+
+    const input = screen.getByRole('textbox')
+    const button = screen.getByRole('button', { name: /buscar cep/i })
+
+    userEvent.type(input, '32110290')
+    userEvent.click(button)
+
+    await waitFor(() => {
+      expect(screen.getByText('32110-290')).toBeInTheDocument()
+      expect(screen.getByText('MG')).toBeInTheDocument()
+      expect(screen.getByText('Contagem')).toBeInTheDocument()
+      expect(screen.getByText('Praça São Pedro')).toBeInTheDocument()
+    })
   })
 })
