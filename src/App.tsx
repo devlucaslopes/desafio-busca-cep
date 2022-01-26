@@ -28,24 +28,34 @@ type ResultType = {
 }
 
 function App() {
+  const [hasError, setHasError] = useState(false)
   const [result, setResult] = useState<ResultType | null>(null)
 
+  const resetValues = () => {
+    setHasError(false)
+    setResult(null)
+  }
+
   const handleSubmit = async (zipcode: string) => {
+    resetValues()
+
     const response = await axios.get<ResponseType>(
       `https://viacep.com.br/ws/${zipcode}/json/`
     )
 
     if (!response?.data) return
 
-    if ('cep' in response.data) {
-      const { data } = response
+    const { data } = response
 
+    if ('cep' in data) {
       setResult({
         zipcode: data.cep,
         city: data.localidade,
         state: data.uf,
         address: data.logradouro
       })
+    } else {
+      setHasError(true)
     }
   }
 
@@ -64,6 +74,8 @@ function App() {
               <Result {...result} />
             </Wrapper>
           )}
+
+          {hasError && <Wrapper>CEP não encontrado, tente novamente.</Wrapper>}
         </div>
       </div>
     </main>
