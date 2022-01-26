@@ -7,6 +7,19 @@ import { Result } from './components/Result'
 
 import './App.scss'
 
+type ResponseSuccessType = {
+  cep: string
+  localidade: string
+  uf: string
+  logradouro: string
+}
+
+type ResponseErrorType = {
+  erro: boolean
+}
+
+type ResponseType = ResponseSuccessType | ResponseErrorType
+
 type ResultType = {
   zipcode: string
   state: string
@@ -18,20 +31,22 @@ function App() {
   const [result, setResult] = useState<ResultType | null>(null)
 
   const handleSubmit = async (zipcode: string) => {
-    const response = await axios.get(
+    const response = await axios.get<ResponseType>(
       `https://viacep.com.br/ws/${zipcode}/json/`
     )
 
     if (!response?.data) return
 
-    const { data } = response
+    if ('cep' in response.data) {
+      const { data } = response
 
-    setResult({
-      zipcode: data.cep,
-      city: data.localidade,
-      state: data.uf,
-      address: data.logradouro
-    })
+      setResult({
+        zipcode: data.cep,
+        city: data.localidade,
+        state: data.uf,
+        address: data.logradouro
+      })
+    }
   }
 
   return (
